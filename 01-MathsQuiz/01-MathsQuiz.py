@@ -13,10 +13,10 @@ COLORS = {
 }
 
 FONTS = {
-    "title": ("Helvetica", 16),
-    "heading": ("Helvetica", 14),
-    "body": ("Helvetica", 12),
-    "body_bold": ("Helvetica", 12, "bold"),
+    "title": ("Courier New", 16),
+    "heading": ("Courier New", 14),
+    "body": ("Courier New", 12),
+    "body_bold": ("Courier New", 12, "bold"),
 }
 
 root = Tk()
@@ -24,13 +24,18 @@ root.geometry("900x600")
 root.title("Arithmetic Math Quiz")
 
 container = Frame(root)
-container.grid(column=1)
+
+
+root.rowconfigure(0, weight=1)
+root.columnconfigure(1, weight=1)
+
+sidebar_main = Frame(root, width=250, bg=COLORS["bg_card_inner"])
+sidebar_main.grid(row=0, column=0, sticky="ns")
+sidebar_main.grid_propagate(False)
+
+container = Frame(root)
+container.grid(row=0, column=1, sticky="nsew")
 container.config(width=600, height=600)
-
-sidebar_main = Frame(root)
-sidebar_main.grid(column=0)
-sidebar_main.config(width=300, height=600)
-
 pages = {}
 
 def show_page(name):
@@ -39,7 +44,7 @@ def show_page(name):
 
     pages[name].pack(fill="both", expand=True)
 
-def make_options_sidebar():
+def difficultysidebar():
     sidebar = Frame(sidebar_main, bg=COLORS["bg_card_inner"])
     
     #Create home button
@@ -57,43 +62,26 @@ def make_options_sidebar():
     info_btn = Button(sidebar, text='Information', font=('Bold',12), fg='#ffffff',bg='#22263d',bd=0,)
     info_btn.place(x=10, y=150)
 
+    sidebar = difficultysidebar()
+    sidebar.pack(fill="both", expand=True)
     return sidebar
 
-def make_home_page(parent):
-    # Create a frame, then put widgets inside it.
+def mainhomescreen(parent):
     frame = Frame(parent, bg=COLORS["bg_color"])
-
-    Label(frame, text="Welcome to the quiz!", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=FONTS["title"])
-
-    Button(
-        frame,
-        text="Start quiz",
-        command=lambda: show_page("quiz")
-    )
-
+    Label(frame, text="Welcome to the quiz!", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=FONTS["title"]).pack(pady=20)
+    Button(frame, text="Start quiz", command=lambda: show_page("quiz")).pack()
     return frame
 
-def make_quiz_page(parent):
+def mainquizpage(parent):
     frame = Frame(parent, bg="#1F2937")
-
-    Label(
-        frame,
-        text="Question 1: What is 2 + 2?",
-        bg="#1F2937",
-        fg="white"
-    ).pack(pady=20)
-
-    Button(
-        frame,
-        text="Back to home",
-        command=lambda: show_page("home")
-    ).pack()
+    Label(frame, text="Question 1: What is 2 + 2?", bg="#1F2937", fg="white").pack(pady=20)
+    Button(frame, text="Back to home", command=lambda: show_page("home")).pack()
 
     return frame
 
 
-pages["home"] = make_home_page(container)
-pages["quiz"] = make_quiz_page(container)
+pages["home"] = mainhomescreen(container)
+pages["quiz"] = mainquizpage(container)
 
 show_page("home")
 root.mainloop()
