@@ -24,7 +24,12 @@ root.geometry("900x600")
 root.title("Arithmetic Math Quiz")
 
 container = Frame(root)
-container.pack(fill="both", expand=True)
+container.grid(column=1)
+container.config(width=600, height=600)
+
+sidebar_main = Frame(root)
+sidebar_main.grid(column=0)
+sidebar_main.config(width=300, height=600)
 
 pages = {}
 
@@ -34,17 +39,37 @@ def show_page(name):
 
     pages[name].pack(fill="both", expand=True)
 
+def make_options_sidebar():
+    sidebar = Frame(sidebar_main, bg=COLORS["bg_card_inner"])
+    
+    #Create home button
+    home_btn = Button(sidebar, text='Home', font=('Bold',12), fg='#ffffff',bg='#22263d',bd=0,
+                     command=home_page)
+    home_btn.place(x=10, y=50)
+
+
+    #Create main button
+    main_btn = Button(sidebar, text='Main', font=('Bold',12), fg='#ffffff',bg='#22263d',bd=0,
+                     command=main_page)
+    main_btn.place(x=10, y=100)
+
+    #Create info button
+    info_btn = Button(sidebar, text='Information', font=('Bold',12), fg='#ffffff',bg='#22263d',bd=0,)
+    info_btn.place(x=10, y=150)
+
+    return sidebar
+
 def make_home_page(parent):
     # Create a frame, then put widgets inside it.
     frame = Frame(parent, bg=COLORS["bg_color"])
 
-    Label( frame, text="Welcome to the quiz!", bg="#0B0F19", fg="white").pack(pady=20)
+    Label(frame, text="Welcome to the quiz!", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=FONTS["title"])
 
     Button(
         frame,
         text="Start quiz",
         command=lambda: show_page("quiz")
-    ).pack()
+    )
 
     return frame
 
@@ -65,6 +90,7 @@ def make_quiz_page(parent):
     ).pack()
 
     return frame
+
 
 pages["home"] = make_home_page(container)
 pages["quiz"] = make_quiz_page(container)
