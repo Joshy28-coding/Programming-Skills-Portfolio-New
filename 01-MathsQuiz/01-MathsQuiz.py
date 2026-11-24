@@ -56,30 +56,30 @@ def difficultysidebar():
     sidebar.columnconfigure(0, weight=1)
 
     difficultyhead = Label(
-    sidebar, text="Difficulty Selector",
-    fg=COLORS["fg_text"], bg=COLORS["bg_card_inner"],
-    font=FONTS["body_bold"], bd=0
+        sidebar, text="Difficulty Selector",
+        fg=COLORS["fg_text"], bg=COLORS["bg_card_inner"],
+        font=FONTS["body_bold"],
     )
     difficultyhead.grid(row=0, column=0, sticky="ew", padx=10, pady=30)
     
     home_btn = Button(
         sidebar, text="Home",
         fg=COLORS["fg_text"], bg=COLORS["bg_card"],
-        font=FONTS["body_bold"], bd=0, height=2
+        font=FONTS["body_bold"], height=2
     )
     home_btn.grid(row=1, column=0, sticky="ew", padx=10, pady=10)
 
     main_btn = Button(
         sidebar, text="Main",
         fg=COLORS["fg_text"], bg=COLORS["bg_card"],
-        font=FONTS["body_bold"], bd=0, height=2
+        font=FONTS["body_bold"], height=2
     )
     main_btn.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
 
     info_btn = Button(
         sidebar, text="Information",
         fg=COLORS["fg_text"], bg=COLORS["bg_card"],
-        font=FONTS["body_bold"], bd=0, height=2
+        font=FONTS["body_bold"], height=2
     )
     info_btn.grid(row=3, column=0, sticky="ew", padx=10, pady=10)
 
@@ -90,7 +90,11 @@ sidebar.pack(fill="both", expand=True)
 
 def mainhomescreen(parent):
     frame = Frame(parent, bg=COLORS["bg_color"])
-    Label(frame, text="Welcome to the quiz!", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=FONTS["title"]).pack(pady=20)
+    Label(frame, text="Arithmetic Math Quiz", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=FONTS["title"]).pack(pady=(150, 10))
+    Label(frame, text="Welcome to the Quiz!", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=("Courier New", 26, "bold")).pack(pady=10)
+    Label(frame, text="Choose your challenge tier. Each tier has 10 questions each.\n"
+             "Earn 10 points on your first attempt, or 5 points on your second.",
+        bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=FONTS["body"], justify="center").pack(pady=10)
     Button(frame, text="Start quiz", command=lambda: show_page("quiz")).pack()
     return frame
 
