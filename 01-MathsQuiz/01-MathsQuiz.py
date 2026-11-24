@@ -30,7 +30,7 @@ root.title("Arithmetic Math Quiz")
 root.rowconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
 
-sidebar_main = Frame(root, width=250, bg=COLORS["bg_card_inner"])
+sidebar_main = Frame(root, width=300, bg=COLORS["bg_card_inner"])
 sidebar_main.grid(row=0, column=0, sticky="ns")
 sidebar_main.grid_propagate(False)
 
@@ -45,30 +45,43 @@ def show_page(name):
 
     pages[name].pack(fill="both", expand=True)
 
+#wdasdas
+#adad
+#adwdqwd
+#dasdas
+#dasdsad
+
 def difficultysidebar():
     sidebar = Frame(sidebar_main, bg=COLORS["bg_card_inner"])
     sidebar.columnconfigure(0, weight=1)
 
+    difficultyhead = Label(
+    sidebar, text="Difficulty Selector",
+    fg=COLORS["fg_text"], bg=COLORS["bg_card_inner"],
+    font=FONTS["body_bold"], bd=0
+    )
+    difficultyhead.grid(row=0, column=0, sticky="ew", padx=10, pady=30)
+    
     home_btn = Button(
         sidebar, text="Home",
         fg=COLORS["fg_text"], bg=COLORS["bg_card"],
-        font=FONTS["body_bold"], bd=0
+        font=FONTS["body_bold"], bd=0, height=2
     )
-    home_btn.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
+    home_btn.grid(row=1, column=0, sticky="ew", padx=10, pady=10)
 
     main_btn = Button(
         sidebar, text="Main",
         fg=COLORS["fg_text"], bg=COLORS["bg_card"],
-        font=FONTS["body_bold"], bd=0
+        font=FONTS["body_bold"], bd=0, height=2
     )
-    main_btn.grid(row=1, column=0, sticky="ew", padx=10, pady=10)
+    main_btn.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
 
     info_btn = Button(
         sidebar, text="Information",
         fg=COLORS["fg_text"], bg=COLORS["bg_card"],
-        font=FONTS["body_bold"], bd=0
+        font=FONTS["body_bold"], bd=0, height=2
     )
-    info_btn.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
+    info_btn.grid(row=3, column=0, sticky="ew", padx=10, pady=10)
 
     return sidebar
 
