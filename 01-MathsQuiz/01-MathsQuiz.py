@@ -19,12 +19,13 @@ FONTS = {
     "body_bold": ("Courier New", 12, "bold"),
 }
 
+# ====================================
+# Application Root
+# ====================================
+
 root = Tk()
 root.geometry("900x600")
 root.title("Arithmetic Math Quiz")
-
-container = Frame(root)
-
 
 root.rowconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
@@ -46,25 +47,33 @@ def show_page(name):
 
 def difficultysidebar():
     sidebar = Frame(sidebar_main, bg=COLORS["bg_card_inner"])
-    
-    #Create home button
-    home_btn = Button(sidebar, text='Home', font=('Bold',12), fg='#ffffff',bg='#22263d',bd=0,
-                     command=home_page)
-    home_btn.place(x=10, y=50)
+    sidebar.columnconfigure(0, weight=1)
 
+    home_btn = Button(
+        sidebar, text="Home",
+        fg=COLORS["fg_text"], bg=COLORS["bg_card"],
+        font=FONTS["body_bold"], bd=0
+    )
+    home_btn.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
 
-    #Create main button
-    main_btn = Button(sidebar, text='Main', font=('Bold',12), fg='#ffffff',bg='#22263d',bd=0,
-                     command=main_page)
-    main_btn.place(x=10, y=100)
+    main_btn = Button(
+        sidebar, text="Main",
+        fg=COLORS["fg_text"], bg=COLORS["bg_card"],
+        font=FONTS["body_bold"], bd=0
+    )
+    main_btn.grid(row=1, column=0, sticky="ew", padx=10, pady=10)
 
-    #Create info button
-    info_btn = Button(sidebar, text='Information', font=('Bold',12), fg='#ffffff',bg='#22263d',bd=0,)
-    info_btn.place(x=10, y=150)
+    info_btn = Button(
+        sidebar, text="Information",
+        fg=COLORS["fg_text"], bg=COLORS["bg_card"],
+        font=FONTS["body_bold"], bd=0
+    )
+    info_btn.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
 
-    sidebar = difficultysidebar()
-    sidebar.pack(fill="both", expand=True)
     return sidebar
+
+sidebar = difficultysidebar()
+sidebar.pack(fill="both", expand=True)
 
 def mainhomescreen(parent):
     frame = Frame(parent, bg=COLORS["bg_color"])
