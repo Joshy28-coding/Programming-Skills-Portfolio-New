@@ -16,11 +16,11 @@
     },
 
     "FONTS" : {
-    "title": ["Courier New", 16],
-    "heading": ["Courier New", 14],
-    "body": ["Courier New", 12],
-    "body_bold": ["Courier New", 12, "bold"],
-    "muted" : ["Courier New", 10]
+    "title": ["Arial", 16],
+    "heading": ["Arial", 14],
+    "body": ["Arial", 12],
+    "body_bold": ["Arial", 12, "bold"],
+    "muted" : ["Arial", 12]
     },
 
     "DIFFICULTIES" : {

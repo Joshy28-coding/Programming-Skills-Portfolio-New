@@ -33,6 +33,7 @@ root.title("Arithmetic Math Quiz")
 
 root.rowconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
+root.resizable(0, 0)
 
 # ====================================
 # Importing Data file
@@ -53,13 +54,13 @@ bg_photo_home = ImageTk.PhotoImage(bg_image_home)
 
 # - Loading the image buttons was prompted and assisted by A.I
 easybtn = Image.open(Path(__file__).parent / "resources" / "easybtn.png")
-easy_photo_btn = ImageTk.PhotoImage(easybtn.resize((250, 84), Image.Resampling.LANCZOS))
+easy_photo_btn = ImageTk.PhotoImage(easybtn.resize((240, 84), Image.Resampling.LANCZOS))
 
 moderatebtn = Image.open(Path(__file__).parent / "resources" / "moderatebtn.png")
-moderate_photo_btn = ImageTk.PhotoImage(moderatebtn.resize((250, 84), Image.Resampling.LANCZOS))
+moderate_photo_btn = ImageTk.PhotoImage(moderatebtn.resize((240, 84), Image.Resampling.LANCZOS))
 
 hardbtn = Image.open(Path(__file__).parent / "resources" / "hardbtn.png")
-hard_photo_btn = ImageTk.PhotoImage(hardbtn.resize((250, 84), Image.Resampling.LANCZOS))
+hard_photo_btn = ImageTk.PhotoImage(hardbtn.resize((240, 84), Image.Resampling.LANCZOS))
 
 DIFFICULTY_BUTTON_IMAGES = {
     "easy": easy_photo_btn,
@@ -116,7 +117,7 @@ def difficultycrd(parent, difficulty, details, column):
     title = difficulty.title()
     color = COLORS[difficulty]
     
-    card = Frame(parent, bg=COLORS["bg_card"], height=350, width=300)
+    card = Frame(parent, bg=COLORS["bg_card"], height=350, width=270)
     card.grid(row=0, column=column, sticky="nsew", padx=8, pady=8)
     # the card’s contents use pack(). By default, pack lets those contents determine the card’s size, overriding the height i've set.
     # Propogate helps keep the card's set height instead of letting its packed contents resize it.
@@ -138,21 +139,14 @@ def difficultycrd(parent, difficulty, details, column):
             f"{details['number_label']}\n"
             f"({details['min_number']} - {details['max_number']})\n"
             f"{details['question_count']} questions"
-        ),
-        font=FONTS["body"], bg=COLORS["bg_card"], fg=COLORS["fg_text"], wraplength=240, 
+        ), font=FONTS["heading"], bg=COLORS["bg_card"], fg=COLORS["fg_text"], wraplength=240, 
     ).pack(anchor="w", fill="x", pady=3)
 
     Label(content, text=details["description"], font=("Helvetica", 10), bg=COLORS["bg_card"], fg=COLORS["fg_muted"], wraplength=240).pack(anchor="w", fill="x")
 
     Button(
-        content,
-        image=DIFFICULTY_BUTTON_IMAGES[difficulty],
-        command=lambda: show_page("quiz"),
-        bg=COLORS["bg_card"],
-        activebackground=COLORS["bg_card"],
-        borderwidth=0,
-        highlightthickness=0,
-        relief=FLAT,
+        content, image=DIFFICULTY_BUTTON_IMAGES[difficulty], command=lambda: show_page("quiz"), bg=COLORS["bg_card"], activebackground=COLORS["bg_card"],
+        borderwidth=0, highlightthickness=0, relief=FLAT,
     ).pack(pady=(0, 40), side=BOTTOM)
     
     return card
