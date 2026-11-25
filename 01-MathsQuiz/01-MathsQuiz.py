@@ -76,6 +76,51 @@ DIFFICULTY_BUTTON_IMAGES = {
     "advanced": hard_photo_btn,
 }
 
+# ============================================
+# Main Functions
+# ============================================
+
+def mainquestionf():
+    
+    details=DIFFICULTIES[current_difficulty]
+    first_number = random.randint(details["min_number"], details["max_number"])
+    second_number = random.randint(details["min_number"], details["max_number"])
+    operation = random.choice(("+", "-"))
+
+    if operation == "+":
+        correct_answer = first_number + second_number
+    else:
+        if second_number > first_number:
+            first_number, second_number = second_number, first_number
+        correct_answer = first_number - second_number
+        
+    question_label.config(text=f"{first_number} {operation} {second_number} = ?")
+    progress_label.config(
+        text=f"Question {current_question} of {details['question_count']}"
+    )
+    score_label.config(text=f"Score: {score}")
+    feedback_label.config(text="")
+    answer_entry.config(state=NORMAL)
+    answer_entry.delete(0, END)
+    submit_button.config(state=NORMAL)
+    next_button.config(state=DISABLED)
+    attempts = 0
+    
+def start_quiz(difficulty):
+    global current_difficulty, current_question, score
+
+    current_difficulty = difficulty
+    current_question = 1
+    score = 0
+    next_button.config(text="Next question", command=next_question)
+    make_question()
+    show_page("quiz")
+    answer_entry.focus_set()
+
+# =============================================
+# Front-end visuals / frame functions
+# =============================================
+
 def show_page(name):
     for page in pages.values():
         page.pack_forget()
@@ -140,33 +185,6 @@ def mainhomescreen(parent):
 
     return frame
 
-#For moving on to the mainquiz page, I've decided I want to handle the function logic on how the questions might look like
-
-def mainquestionf():
-    
-    details=DIFFICULTIES[current_difficulty]
-    first_number = random.randint(details["min_number"], details["max_number"])
-    second_number = random.randint(details["min_number"], details["max_number"])
-    operation = random.choice(("+", "-"))
-
-    if operation == "+":
-        correct_answer = first_number + second_number
-    else:
-        if second_number > first_number:
-            first_number, second_number = second_number, first_number
-        correct_answer = first_number - second_number
-        
-    question_label.config(text=f"{first_number} {operation} {second_number} = ?")
-    progress_label.config(
-        text=f"Question {current_question} of {details['question_count']}"
-    )
-    score_label.config(text=f"Score: {score}")
-    feedback_label.config(text="")
-    answer_entry.config(state=NORMAL)
-    answer_entry.delete(0, END)
-    submit_button.config(state=NORMAL)
-    next_button.config(state=DISABLED)
-    attempts = 0
         
 def mainquizpage(parent):
     global question_label, progress_label, score_label, feedback_label
@@ -200,7 +218,12 @@ def mainquizpage(parent):
 
     actions = Frame(quiz_card, bg=COLORS["bg_card"])
     actions.pack(pady=(12, 24))
+    
+    submit_button = Button(actions, text="Submit answer", command=checkanswerf, bg=COLORS["bg_card_inner"], fg=COLORS["fg_text"],relief=FLAT,)
+    submit_button.pack(side=LEFT, padx=6)
 
+    next_button = Button(actions, text="Next question", command=nextquestionf, state=DISABLED, bg=COLORS["bg_card_inner"], fg=COLORS["fg_text"], disabledforeground=COLORS["fg_muted"], relief=FLAT,)
+    next_button.pack(side=LEFT, padx=6)
     return frame
 
 
