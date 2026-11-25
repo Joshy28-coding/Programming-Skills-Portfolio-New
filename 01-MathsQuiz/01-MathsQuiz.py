@@ -17,6 +17,7 @@ FONTS = {
     "heading": ("Courier New", 14),
     "body": ("Courier New", 12),
     "body_bold": ("Courier New", 12, "bold"),
+    "muted" : ("Courier New", 10)
 }
 
 # ====================================
@@ -30,9 +31,9 @@ root.title("Arithmetic Math Quiz")
 root.rowconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
 
-sidebar_main = Frame(root, width=300, bg=COLORS["bg_card_inner"])
+sidebar_main = Frame(root, width=250, bg=COLORS["bg_card_inner"])
 sidebar_main.grid(row=0, column=0, sticky="ns")
-sidebar_main.grid_propagate(False)
+sidebar_main.pack_propagate(False)
 
 container = Frame(root)
 container.grid(row=0, column=1, sticky="nsew")
@@ -56,37 +57,63 @@ def difficultysidebar():
     sidebar.columnconfigure(0, weight=1)
 
     difficultyhead = Label(
-        sidebar, text="Difficulty Selector",
+        sidebar, text="Difficulty\nSelector",
         fg=COLORS["fg_text"], bg=COLORS["bg_card_inner"],
         font=FONTS["body_bold"],
     )
     difficultyhead.grid(row=0, column=0, sticky="ew", padx=10, pady=30)
     
-    home_btn = Button(
-        sidebar, text="Home",
+    easy_btn = Button(
+        sidebar, text="Easy",
         fg=COLORS["fg_text"], bg=COLORS["bg_card"],
-        font=FONTS["body_bold"], height=2
+        font=FONTS["body_bold"], height=2, relief = FLAT
     )
-    home_btn.grid(row=1, column=0, sticky="ew", padx=10, pady=10)
+    easy_btn.grid(row=1, column=0, sticky="ew", padx=10, pady=10)
 
-    main_btn = Button(
-        sidebar, text="Main",
+    moder_btn = Button(
+        sidebar, text="Moderate",
         fg=COLORS["fg_text"], bg=COLORS["bg_card"],
-        font=FONTS["body_bold"], height=2
+        font=FONTS["body_bold"], height=2, relief = FLAT
     )
-    main_btn.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
+    moder_btn.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
 
-    info_btn = Button(
-        sidebar, text="Information",
+    hard_btn = Button(
+        sidebar, text="Hard",
         fg=COLORS["fg_text"], bg=COLORS["bg_card"],
-        font=FONTS["body_bold"], height=2
+        font=FONTS["body_bold"], height=2, relief = FLAT
     )
-    info_btn.grid(row=3, column=0, sticky="ew", padx=10, pady=10)
+    hard_btn.grid(row=3, column=0, sticky="ew", padx=10, pady=10)
 
     return sidebar
 
 sidebar = difficultysidebar()
 sidebar.pack(fill="both", expand=True)
+
+def diffcrd(parent, difficulty, details):
+    
+    card = Frame(parent, bg=COLORS["bg_card_inner"], height=250, width=300)
+    card.pack(expand=True, padx=10, pady=10, anchor="w")
+    
+    content = Frame(card, bg=COLORS["bg_card_inner"])
+    content.pack(side=LEFT, fill="both", expand=True, padx=16, pady=12)
+    
+        # ! - Difficulty subtitle
+    Label(
+        content,
+        text=(
+            f"{details['number_label']} "
+            f"({details['min_number']} – {details['max_number']}) · "
+            f"{details['question_count']} questions"
+        ),
+        font=FONTS["body"], bg=COLORS["bg_card_inner"], fg=COLORS["fg_text"]
+    ).pack(anchor="w", pady=3)
+    
+    # ! - Difficulty desription
+    Label(
+        content, text=details["description"], font=("Helvetica", 10), bg=COLORS["bg_card_inner"], fg=COLORS["fg_muted"]
+    ).pack(anchor="w")
+    
+    
 
 def mainhomescreen(parent):
     frame = Frame(parent, bg=COLORS["bg_color"])
@@ -94,8 +121,8 @@ def mainhomescreen(parent):
     Label(frame, text="Welcome to the Quiz!", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=("Courier New", 26, "bold")).pack(pady=10)
     Label(frame, text="Choose your challenge tier. Each tier has 10 questions each.\n"
              "Earn 10 points on your first attempt, or 5 points on your second.",
-        bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=FONTS["body"], justify="center").pack(pady=10)
-    Button(frame, text="Start quiz", command=lambda: show_page("quiz")).pack()
+        bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=FONTS["muted"], justify="center").pack(pady=10)
+    
     return frame
 
 def mainquizpage(parent):
