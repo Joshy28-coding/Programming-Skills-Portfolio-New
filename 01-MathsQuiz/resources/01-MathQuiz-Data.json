@@ -6,7 +6,13 @@
     "bg_entry": "#0F172A",  
 
     "fg_text": "#F9FAFB", 
-    "fg_muted": "#9CA3AF"
+    "fg_muted": "#9CA3AF",
+
+    "easy" : "#10B981",
+    "moderate": "#00D9F5",
+    "advanced": "#8B5CF6",
+    
+    "error" : "#F87171"
     },
 
     "FONTS" : {
@@ -30,14 +36,14 @@
             "min_number": 10,
             "max_number": 99,
             "question_count": 10,
-            "description": "Standard challenge testing speed and accuracy",
+            "description": "Standard challenge testing speed and accuracy"
         },
         "advanced": {
             "number_label": "4-Digit Numbers",
             "min_number": 1000,
             "max_number": 9999,
             "question_count": 10,
-            "description": "High complexity mental computation",
+            "description": "High complexity mental computation"
         }
     }
 }
