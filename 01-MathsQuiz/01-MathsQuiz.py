@@ -54,13 +54,13 @@ bg_photo_home = ImageTk.PhotoImage(bg_image_home)
 
 # - Loading the image buttons was prompted and assisted by A.I
 easybtn = Image.open(Path(__file__).parent / "resources" / "easybtn.png")
-easy_photo_btn = ImageTk.PhotoImage(easybtn.resize((240, 84), Image.Resampling.LANCZOS))
+easy_photo_btn = ImageTk.PhotoImage(easybtn.resize((240, 84)))
 
 moderatebtn = Image.open(Path(__file__).parent / "resources" / "moderatebtn.png")
-moderate_photo_btn = ImageTk.PhotoImage(moderatebtn.resize((240, 84), Image.Resampling.LANCZOS))
+moderate_photo_btn = ImageTk.PhotoImage(moderatebtn.resize((240, 84)))
 
 hardbtn = Image.open(Path(__file__).parent / "resources" / "hardbtn.png")
-hard_photo_btn = ImageTk.PhotoImage(hardbtn.resize((240, 84), Image.Resampling.LANCZOS))
+hard_photo_btn = ImageTk.PhotoImage(hardbtn.resize((240, 84)))
 
 DIFFICULTY_BUTTON_IMAGES = {
     "easy": easy_photo_btn,
@@ -123,11 +123,7 @@ def difficultycrd(parent, difficulty, details, column):
     # Propogate helps keep the card's set height instead of letting its packed contents resize it.
     card.pack_propagate(False)
     
-    accent = Frame(
-        card,
-        bg=color,
-        height=5
-    )
+    accent = Frame(card, bg=color, height=5)
     accent.pack(side=TOP, fill="x")
     
     content = Frame(card, bg=COLORS["bg_card"])
@@ -140,9 +136,9 @@ def difficultycrd(parent, difficulty, details, column):
             f"({details['min_number']} - {details['max_number']})\n"
             f"{details['question_count']} questions"
         ), font=FONTS["heading"], bg=COLORS["bg_card"], fg=COLORS["fg_text"], wraplength=240, 
-    ).pack(anchor="w", fill="x", pady=3)
+    ).pack(anchor="w", fill="x", pady=8)
 
-    Label(content, text=details["description"], font=("Helvetica", 10), bg=COLORS["bg_card"], fg=COLORS["fg_muted"], wraplength=240).pack(anchor="w", fill="x")
+    Label(content, text=details["description"], font=("Helvetica", 10), bg=COLORS["bg_card"], fg=COLORS["fg_muted"], wraplength=240).pack(anchor="w", fill="x", pady=20)
 
     Button(
         content, image=DIFFICULTY_BUTTON_IMAGES[difficulty], command=lambda: show_page("quiz"), bg=COLORS["bg_card"], activebackground=COLORS["bg_card"],
@@ -157,18 +153,18 @@ def mainhomescreen(parent):
     background.place(x=0, y=0, relwidth=1, relheight=1)
     background.lower()
     
-    Label(frame, text="Arithmetic Math Quiz", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=FONTS["title"]).pack(pady=(100, 10))
-    Label(frame, text="Welcome to the Quiz!", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=("Courier New", 26, "bold")).pack(pady=10)
+    Label(frame, text="-Arithmetic Math Quiz -", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=FONTS["title"]).pack(pady=(100, 10))
+    Label(frame, text="Welcome to the Quiz!", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=("Courier New", 30, "bold")).pack()
     Label(frame, text="Choose your challenge tier. Each tier has 10 questions each.\n"
              "Earn 10 points on your first attempt, or 5 points on your second.",
-        bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=FONTS["muted"], justify="center").pack(pady=10)
+        bg=COLORS["bg_color"], fg=COLORS["fg_muted"], font=FONTS["muted"], justify="center").pack(pady=(20, 20))
     
     cards = Frame(frame, bg=COLORS["bg_color"])
     cards.pack()
 
+    # The first loop makes three equal-width card columns; the second creates one difficulty card per JSON entry and places it in its matching column.
     for column in range(3):
         cards.grid_columnconfigure(column, weight=1, uniform="difficulty")
-
     for column, (difficulty, details) in enumerate(DIFFICULTIES.items()):
         difficultycrd(cards, difficulty, details, column)
 
