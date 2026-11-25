@@ -193,6 +193,18 @@ def mainquestionf():
             first_number, second_number = second_number, first_number
         correct_answer = first_number - second_number
         
+    question_label.config(text=f"{first_number} {operation} {second_number} = ?")
+    progress_label.config(
+        text=f"Question {current_question} of {details['question_count']}"
+    )
+    score_label.config(text=f"Score: {score}")
+    feedback_label.config(text="")
+    answer_entry.config(state=NORMAL)
+    answer_entry.delete(0, END)
+    submit_button.config(state=NORMAL)
+    next_button.config(state=DISABLED)
+    attempts = 0
+        
 def mainquizpage(parent):
     frame = Frame(parent)
     background = Label(frame, image=bg_photo_home)
