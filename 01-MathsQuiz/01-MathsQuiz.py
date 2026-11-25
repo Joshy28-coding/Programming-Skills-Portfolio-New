@@ -112,10 +112,46 @@ def start_quiz(difficulty):
     current_difficulty = difficulty
     current_question = 1
     score = 0
-    next_button.config(text="Next question", command=next_question)
-    make_question()
+    next_button.config(text="Next question", command=nextquestionf)
+    mainquestionf()
     show_page("quiz")
     answer_entry.focus_set()
+
+def checkanswer():
+    global attempts, score
+
+    try:
+        guess = int(answer_entry.get())
+    except ValueError:
+        feedback_label.config(text="Enter a whole number.", fg=COLORS["error"])
+        return
+
+    if guess == correct_answer:
+        points = 10 if attempts == 0 else 5
+        score += points
+        score_label.config(text=f"Score: {score}")
+        feedback_label.config(
+            text=f"Correct! You earned {points} points.",
+            fg=COLORS[current_difficulty],
+        )
+        answer_entry.config(state=DISABLED)
+        submit_button.config(state=DISABLED)
+        next_button.config(state=NORMAL)
+    else:
+        attempts += 1
+        if attempts == 1:
+            feedback_label.config(
+                text="Not quite. Try one more time.",
+                fg=COLORS["error"],
+            )
+        else:
+            feedback_label.config(
+                text=f"The answer was {correct_answer}.",
+                fg=COLORS["error"],
+            )
+            answer_entry.config(state=DISABLED)
+            submit_button.config(state=DISABLED)
+            next_button.config(state=NORMAL)
 
 # =============================================
 # Front-end visuals / frame functions
