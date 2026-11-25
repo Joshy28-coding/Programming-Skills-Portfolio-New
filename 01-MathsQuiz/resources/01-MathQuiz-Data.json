@@ -15,5 +15,29 @@
     "body": ["Courier New", 12],
     "body_bold": ["Courier New", 12, "bold"],
     "muted" : ["Courier New", 10]
+    },
+
+    "DIFFICULTIES" : {
+        "easy": {
+            "number_label": "Single-Digit Numbers",
+            "min_number": 1,
+            "max_number": 9,
+            "question_count": 10,
+            "description": "Ideal for warming up and mental agility"
+        },
+        "moderate": {
+            "number_label": "Double-Digit Numbers",
+            "min_number": 10,
+            "max_number": 99,
+            "question_count": 10,
+            "description": "Standard challenge testing speed and accuracy",
+        },
+        "advanced": {
+            "number_label": "4-Digit Numbers",
+            "min_number": 1000,
+            "max_number": 9999,
+            "question_count": 10,
+            "description": "High complexity mental computation",
+        }
     }
 }
