@@ -1,0 +1,19 @@
+{
+    "COLORS" : {
+    "bg_color": "#0B0F19",  
+    "bg_card": "#111827", 
+    "bg_card_inner": "#1F2937",  
+    "bg_entry": "#0F172A",  
+
+    "fg_text": "#F9FAFB", 
+    "fg_muted": "#9CA3AF"
+    },
+
+    "FONTS" : {
+    "title": ["Courier New", 16],
+    "heading": ["Courier New", 14],
+    "body": ["Courier New", 12],
+    "body_bold": ["Courier New", 12, "bold"],
+    "muted" : ["Courier New", 10]
+    }
+}

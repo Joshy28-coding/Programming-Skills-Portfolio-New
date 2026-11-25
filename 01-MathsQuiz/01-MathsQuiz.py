@@ -1,24 +1,16 @@
 from tkinter import *
+import json
+from pathlib import Path
 
-COLORS = {
-    # ! - Background Colors
-    "bg_color": "#0B0F19",  # Background color
-    "bg_card": "#111827",  # Card Container
-    "bg_card_inner": "#1F2937",  # Inner Card Container
-    "bg_entry": "#0F172A",  # Dark Entry Card
-    
-    # ! - Text Colors
-    "fg_text": "#F9FAFB",  # White Text
-    "fg_muted": "#9CA3AF",  # Muted Grey Text
-}
+# I've used UTF-8 to help encode text so computers can store and read characters.
+# This will be useful later on when I implement the difficulties dictionary.
+data_path = Path(__file__).parent / "resources" / "01-MathQuiz-Data.json"
+with data_path.open('r', encoding="utf-8") as f:
+    data = json.load(f)
 
-FONTS = {
-    "title": ("Courier New", 16),
-    "heading": ("Courier New", 14),
-    "body": ("Courier New", 12),
-    "body_bold": ("Courier New", 12, "bold"),
-    "muted" : ("Courier New", 10)
-}
+COLORS = data["COLORS"]
+# I've learned that tuple conversion from .json to .py helps me keep the font settings recognizable to the Tkinter code.
+FONTS = {name: tuple(font) for name, font in data["FONTS"].items()}
 
 # ====================================
 # Application Root
@@ -30,6 +22,10 @@ root.title("Arithmetic Math Quiz")
 
 root.rowconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
+
+# ====================================
+# Importing Data file
+# ====================================
 
 sidebar_main = Frame(root, width=250, bg=COLORS["bg_card_inner"])
 sidebar_main.grid(row=0, column=0, sticky="ns")
@@ -89,7 +85,7 @@ def difficultysidebar():
 sidebar = difficultysidebar()
 sidebar.pack(fill="both", expand=True)
 
-def diffcrd(parent, difficulty, details):
+def difficultycrd(parent, difficulty, details):
     
     card = Frame(parent, bg=COLORS["bg_card_inner"], height=250, width=300)
     card.pack(expand=True, padx=10, pady=10, anchor="w")
@@ -97,7 +93,6 @@ def diffcrd(parent, difficulty, details):
     content = Frame(card, bg=COLORS["bg_card_inner"])
     content.pack(side=LEFT, fill="both", expand=True, padx=16, pady=12)
     
-        # ! - Difficulty subtitle
     Label(
         content,
         text=(
@@ -107,13 +102,10 @@ def diffcrd(parent, difficulty, details):
         ),
         font=FONTS["body"], bg=COLORS["bg_card_inner"], fg=COLORS["fg_text"]
     ).pack(anchor="w", pady=3)
+
+    Label(content, text=details["description"], font=("Helvetica", 10), bg=COLORS["bg_card_inner"], fg=COLORS["fg_muted"]).pack(anchor="w")
     
-    # ! - Difficulty desription
-    Label(
-        content, text=details["description"], font=("Helvetica", 10), bg=COLORS["bg_card_inner"], fg=COLORS["fg_muted"]
-    ).pack(anchor="w")
-    
-    
+    return card
 
 def mainhomescreen(parent):
     frame = Frame(parent, bg=COLORS["bg_color"])
