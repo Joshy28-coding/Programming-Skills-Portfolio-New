@@ -48,6 +48,12 @@ container.grid(row=0, column=1, sticky="nsew")
 container.config(width=600, height=600)
 pages = {}
 
+current_difficulty = ""
+current_question = 0
+score = 0
+attempts = 0
+correct_answer = 0
+
 # Load the background image for home_frame
 bg_image_home = Image.open(Path(__file__).parent / "resources" / "mathquiz_bg.png")
 bg_photo_home = ImageTk.PhotoImage(bg_image_home)
@@ -153,7 +159,7 @@ def mainhomescreen(parent):
     background.place(x=0, y=0, relwidth=1, relheight=1)
     background.lower()
     
-    Label(frame, text="-Arithmetic Math Quiz -", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=FONTS["title"]).pack(pady=(100, 10))
+    Label(frame, text="- Arithmetic Math Quiz -", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=FONTS["title"]).pack(pady=(100, 10))
     Label(frame, text="Welcome to the Quiz!", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=("Courier New", 30, "bold")).pack()
     Label(frame, text="Choose your challenge tier. Each tier has 10 questions each.\n"
              "Earn 10 points on your first attempt, or 5 points on your second.",
@@ -171,8 +177,11 @@ def mainhomescreen(parent):
     return frame
 
 def mainquizpage(parent):
-    frame = Frame(parent, bg="#1F2937")
-    Label(frame, text="Question 1: What is 2 + 2?", bg="#1F2937", fg="white").pack(pady=20)
+    frame = Frame(parent)
+    background = Label(frame, image=bg_photo_home)
+    background.place(x=0, y=0, relwidth=1, relheight=1)
+    background.lower()
+
     Button(frame, text="Back to home", command=lambda: show_page("home")).pack()
 
     return frame
