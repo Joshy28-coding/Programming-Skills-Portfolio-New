@@ -1,6 +1,7 @@
 from tkinter import *
 import json
 from pathlib import Path
+from PIL import Image, ImageTk
 
 # ===================================
 # What I've learned - Notes
@@ -45,6 +46,26 @@ container = Frame(root)
 container.grid(row=0, column=1, sticky="nsew")
 container.config(width=600, height=600)
 pages = {}
+
+# Load the background image for home_frame
+bg_image_home = Image.open(Path(__file__).parent / "resources" / "mathquiz_bg.png")
+bg_photo_home = ImageTk.PhotoImage(bg_image_home)
+
+# - Loading the image buttons was prompted and assisted by A.I
+easybtn = Image.open(Path(__file__).parent / "resources" / "easybtn.png")
+easy_photo_btn = ImageTk.PhotoImage(easybtn.resize((250, 84), Image.Resampling.LANCZOS))
+
+moderatebtn = Image.open(Path(__file__).parent / "resources" / "moderatebtn.png")
+moderate_photo_btn = ImageTk.PhotoImage(moderatebtn.resize((250, 84), Image.Resampling.LANCZOS))
+
+hardbtn = Image.open(Path(__file__).parent / "resources" / "hardbtn.png")
+hard_photo_btn = ImageTk.PhotoImage(hardbtn.resize((250, 84), Image.Resampling.LANCZOS))
+
+DIFFICULTY_BUTTON_IMAGES = {
+    "easy": easy_photo_btn,
+    "moderate": moderate_photo_btn,
+    "advanced": hard_photo_btn,
+}
 
 def show_page(name):
     for page in pages.values():
@@ -122,11 +143,26 @@ def difficultycrd(parent, difficulty, details, column):
     ).pack(anchor="w", fill="x", pady=3)
 
     Label(content, text=details["description"], font=("Helvetica", 10), bg=COLORS["bg_card"], fg=COLORS["fg_muted"], wraplength=240).pack(anchor="w", fill="x")
+
+    Button(
+        content,
+        image=DIFFICULTY_BUTTON_IMAGES[difficulty],
+        command=lambda: show_page("quiz"),
+        bg=COLORS["bg_card"],
+        activebackground=COLORS["bg_card"],
+        borderwidth=0,
+        highlightthickness=0,
+        relief=FLAT,
+    ).pack(pady=(0, 40), side=BOTTOM)
     
     return card
 
 def mainhomescreen(parent):
     frame = Frame(parent, bg=COLORS["bg_color"])
+    background = Label(frame, image=bg_photo_home)
+    background.place(x=0, y=0, relwidth=1, relheight=1)
+    background.lower()
+    
     Label(frame, text="Arithmetic Math Quiz", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=FONTS["title"]).pack(pady=(100, 10))
     Label(frame, text="Welcome to the Quiz!", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=("Courier New", 26, "bold")).pack(pady=10)
     Label(frame, text="Choose your challenge tier. Each tier has 10 questions each.\n"
@@ -134,7 +170,7 @@ def mainhomescreen(parent):
         bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=FONTS["muted"], justify="center").pack(pady=10)
     
     cards = Frame(frame, bg=COLORS["bg_color"])
-    cards.pack(padx=10, pady=30)
+    cards.pack()
 
     for column in range(3):
         cards.grid_columnconfigure(column, weight=1, uniform="difficulty")
