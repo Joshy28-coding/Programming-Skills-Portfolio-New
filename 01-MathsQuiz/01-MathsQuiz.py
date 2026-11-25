@@ -106,7 +106,7 @@ def mainquestionf():
     next_button.config(state=DISABLED)
     attempts = 0
     
-def start_quiz(difficulty):
+def startquizf(difficulty):
     global current_difficulty, current_question, score
 
     current_difficulty = difficulty
@@ -117,7 +117,7 @@ def start_quiz(difficulty):
     show_page("quiz")
     answer_entry.focus_set()
 
-def checkanswer():
+def checkanswerf():
     global attempts, score
 
     try:
@@ -152,6 +152,28 @@ def checkanswer():
             answer_entry.config(state=DISABLED)
             submit_button.config(state=DISABLED)
             next_button.config(state=NORMAL)
+
+def nextquestionf():
+    global current_question
+
+    question_count = DIFFICULTIES[current_difficulty]["question_count"]
+    if current_question == question_count:
+        question_label.config(text="Quiz complete!")
+        progress_label.config(text=f"You answered {question_count} questions.")
+        score_label.config(text=f"Final score: {score} / {question_count * 10}")
+        feedback_label.config(text="Well done!")
+        answer_entry.config(state=DISABLED)
+        submit_button.config(state=DISABLED)
+        next_button.config(
+            text="Choose another difficulty",
+            command=lambda: show_page("home"),
+        )
+        return
+
+    current_question += 1
+    mainquestionf()
+
+    
 
 # =============================================
 # Front-end visuals / frame functions
