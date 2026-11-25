@@ -214,9 +214,9 @@ def difficultycrd(parent, difficulty, details, column):
     Label(content, text=details["description"], font=("Helvetica", 10), bg=COLORS["bg_card"], fg=COLORS["fg_muted"], wraplength=240).pack(anchor="w", fill="x", pady=20)
 
     Button(
-        content, image=DIFFICULTY_BUTTON_IMAGES[difficulty], command=lambda: show_page("quiz"), bg=COLORS["bg_card"], activebackground=COLORS["bg_card"],
+        command=lambda level=difficulty: startquizf(level), bg=COLORS["bg_card"], activebackground=COLORS["bg_card"],
         borderwidth=0, highlightthickness=0, relief=FLAT,
-    ).pack(pady=(0, 40), side=BOTTOM)
+    ).pack(pady=(0, 40))
     
     return card
 
