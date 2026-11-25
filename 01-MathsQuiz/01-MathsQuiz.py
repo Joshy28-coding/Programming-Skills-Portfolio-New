@@ -12,6 +12,7 @@ import random
 # It’s different from side: side chooses which side of the parent the widget is placed on; anchor aligns it within its allotted space.
 # With fill="x", there’s no extra horizontal space to align within.
 
+# What is Global? - tells Python that an assignment inside a function should update a variable defined outside it, rather than create a separate local variable.
 
 # I've used UTF-8 to help encode text so computers can store and read characters.
 # This will be useful later on when I implement the difficulties dictionary.
@@ -80,44 +81,6 @@ def show_page(name):
         page.pack_forget()
 
     pages[name].pack(fill="both", expand=True)
-
-'''I've decided to archive this function just in case I'd need it later, after further thought I've decided the options/sidebar on the left is bad U.I design. But just in case I'll keep it as comments for now'''
-# def difficultysidebar():
-#     sidebar = Frame(sidebar_main, bg=COLORS["bg_card_inner"])
-#     sidebar.columnconfigure(0, weight=1)
-
-#     difficultyhead = Label(
-#         sidebar, text="Difficulty\nSelector",
-#         fg=COLORS["fg_text"], bg=COLORS["bg_card_inner"],
-#         font=FONTS["body_bold"],
-#     )
-#     difficultyhead.grid(row=0, column=0, sticky="ew", padx=10, pady=30)
-    
-#     easy_btn = Button(
-#         sidebar, text="Easy",
-#         fg=COLORS["fg_text"], bg=COLORS["bg_card"],
-#         font=FONTS["body_bold"], height=2, relief = FLAT
-#     )
-#     easy_btn.grid(row=1, column=0, sticky="ew", padx=10, pady=10)
-
-#     moder_btn = Button(
-#         sidebar, text="Moderate",
-#         fg=COLORS["fg_text"], bg=COLORS["bg_card"],
-#         font=FONTS["body_bold"], height=2, relief = FLAT
-#     )
-#     moder_btn.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
-
-#     hard_btn = Button(
-#         sidebar, text="Hard",
-#         fg=COLORS["fg_text"], bg=COLORS["bg_card"],
-#         font=FONTS["body_bold"], height=2, relief = FLAT
-#     )
-#     hard_btn.grid(row=3, column=0, sticky="ew", padx=10, pady=10)
-
-#     return sidebar
-
-# sidebar = difficultysidebar()
-# sidebar.pack(fill="both", expand=True)
 
 def difficultycrd(parent, difficulty, details, column):
     
@@ -206,12 +169,37 @@ def mainquestionf():
     attempts = 0
         
 def mainquizpage(parent):
+    global question_label, progress_label, score_label, feedback_label
+    global answer_entry, submit_button, next_button    
+
     frame = Frame(parent)
     background = Label(frame, image=bg_photo_home)
     background.place(x=0, y=0, relwidth=1, relheight=1)
     background.lower()
 
-    Button(frame, text="Back to home", command=lambda: show_page("home")).pack()
+    Button(frame, text="Back to home", command=lambda: show_page("home"), bg=COLORS["bg_card"], fg=COLORS["fg_text"], relief=FLAT,).pack(anchor="w", padx=24, pady=20)
+    
+    quiz_card = Frame(frame, bg=COLORS["bg_card"])
+    quiz_card.pack(fill="x", padx=150, pady=(70, 0))
+
+    status_row = Frame(quiz_card, bg=COLORS["bg_card"])
+    status_row.pack(fill="x", padx=24, pady=(20, 10))
+    progress_label = Label(status_row, text="", font=FONTS["body"], bg=COLORS["bg_card"], fg=COLORS["fg_muted"],)
+    progress_label.pack(side=LEFT)
+
+    score_label = Label(status_row, text="Score: 0", font=FONTS["body_bold"], bg=COLORS["bg_card"],fg=COLORS["fg_text"],)
+    score_label.pack(side=RIGHT)
+
+    question_label = Label(quiz_card, text="Choose a difficulty to begin.", font=("Arial", 30, "bold"), bg=COLORS["bg_card"], fg=COLORS["fg_text"], wraplength=500,)
+    question_label.pack(pady=(35, 20))
+
+    answer_entry = Entry(quiz_card, font=FONTS["heading"], justify="center", bg=COLORS["bg_entry"], fg=COLORS["fg_text"], insertbackground=COLORS["fg_text"], relief=FLAT,)
+    answer_entry.pack(padx=24, pady=10, ipadx=12, ipady=8)
+    feedback_label = Label(quiz_card, text="", font=FONTS["body"], bg=COLORS["bg_card"], fg=COLORS["fg_muted"],)
+    feedback_label.pack(pady=8)
+
+    actions = Frame(quiz_card, bg=COLORS["bg_card"])
+    actions.pack(pady=(12, 24))
 
     return frame
 
