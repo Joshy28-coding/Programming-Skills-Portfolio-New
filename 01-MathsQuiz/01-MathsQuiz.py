@@ -2,6 +2,7 @@ from tkinter import *
 import json
 from pathlib import Path
 from PIL import Image, ImageTk
+import random
 
 # ===================================
 # What I've learned - Notes
@@ -176,6 +177,22 @@ def mainhomescreen(parent):
 
     return frame
 
+#For moving on to the mainquiz page, I've decided I want to handle the function logic on how the questions might look like
+
+def mainquestionf():
+    
+    details=DIFFICULTIES[current_difficulty]
+    first_number = random.randint(details["min_number"], details["max_number"])
+    second_number = random.randint(details["min_number"], details["max_number"])
+    operation = random.choice(("+", "-"))
+
+    if operation == "+":
+        correct_answer = first_number + second_number
+    else:
+        if second_number > first_number:
+            first_number, second_number = second_number, first_number
+        correct_answer = first_number - second_number
+        
 def mainquizpage(parent):
     frame = Frame(parent)
     background = Label(frame, image=bg_photo_home)
