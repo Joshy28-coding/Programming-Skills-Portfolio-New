@@ -91,7 +91,7 @@ DIFFICULTY_BUTTON_IMAGES = {
 }
 
 # ============================================
-# Main Functions
+# Main Functions / Logic
 # ============================================
 
 def mainquestionf():
