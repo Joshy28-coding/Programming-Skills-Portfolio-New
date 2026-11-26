@@ -4,6 +4,21 @@ from pathlib import Path
 from PIL import Image, ImageTk
 import random
 
+# ==================================================
+# Math Quiz Overview
+# ==================================================
+# 01-MathQuiz, submitted by Josh Louis R. Contreras Creative Computing Level 5
+# This quiz covers the necessary requirements expected for this quiz.
+#   - Develop a GUI Tkinter application that functions as a MathQuiz.
+#   - The main screen is presented with a short menu of difficulty options to select.
+#   - Difficulty determines the number of digits to be added or subtracted. Easy(singe digits), Moderate(double digits), Advanced(4-digits).
+#   - When the user submits the correct answer on the first attempt they get 10 pts, if second 5 pts. If they fail the second, they fail the question and move on to the next question.
+#   - Small widgets such as score count and question progress is displayed during the quiz.
+#   - The question's values are scrambled for addition and subtraction operations, they use the random module.
+#   - !!! What code you see here is mostly taken and learned from the 'Advanced Python' materials given to us as reference.
+#   - !!! the '01-MathQuiz-Data-json' file contains dict. for Colors, fonts, difficulty items and rankings.
+#   - I acknowledge I have used A.I to assist me in bug-testing complex functions such as
+
 # ===================================
 # What I've learned - Notes
 # ====================================
@@ -41,10 +56,6 @@ root.resizable(0, 0)
 # ====================================
 # Importing Data file
 # ====================================
-
-# sidebar_main = Frame(root, width=250, bg=COLORS["bg_card_inner"])
-# sidebar_main.grid(row=0, column=0, sticky="ns")
-# sidebar_main.pack_propagate(False)
 
 container = Frame(root)
 container.grid(row=0, column=1, sticky="nsew")
@@ -107,7 +118,7 @@ def mainquestionf():
     submit_button.config(state=NORMAL)
     next_button.config(state=DISABLED)
     attempts = 0
-    
+
 def startquizf(difficulty):
     global current_difficulty, current_question, score
 
@@ -193,6 +204,7 @@ def calculaterankf():
 # Front-end visuals / frame functions
 # =============================================
 
+
 def show_page(name):
     for page in pages.values():
         page.pack_forget()
@@ -239,7 +251,7 @@ def mainhomescreen(parent):
     background.place(x=0, y=0, relwidth=1, relheight=1)
     background.lower()
     
-    Label(frame, text="- Arithmetic Math Quiz -", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=FONTS["title"]).pack(pady=(100, 10))
+    Label(frame, text="- Arithmetic Math Quiz -", bg=COLORS["bg_color"], fg=COLORS["moderate"], font=FONTS["title"]).pack(pady=(100, 10))
     Label(frame, text="Welcome to the Quiz!", bg=COLORS["bg_color"], fg=COLORS["fg_text"], font=("Courier New", 30, "bold")).pack()
     Label(frame, text="Choose your challenge tier. Each tier has 10 questions each.\n"
              "Earn 10 points on your first attempt, or 5 points on your second.",
@@ -313,39 +325,16 @@ def mainresultspage(parent):
     results_card.pack(fill="x", padx=150, pady=(70, 10))
 
     result_title_label = Label(
-        results_card,
-        text="Quiz complete!",
-        font=FONTS["heading"],
-        bg=COLORS["bg_card"],
-        fg=COLORS["fg_text"],
-    )
+    results_card, text="Quiz complete!", font=("Courier New", 30, "bold"), bg=COLORS["bg_card"], fg=COLORS["fg_text"])
     result_title_label.pack(pady=(30, 12))
 
-    result_score_label = Label(
-        results_card,
-        text="",
-        font=FONTS["body_bold"],
-        bg=COLORS["bg_card"],
-        fg=COLORS["fg_text"],
-    )
+    result_score_label = Label(results_card, text="", font=FONTS["body_bold"], bg=COLORS["bg_card"], fg=COLORS["fg_text"])
     result_score_label.pack(pady=(0, 30))
 
-    result_rank_label = Label(
-        results_card,
-        text="",
-        font=FONTS["heading"],
-        bg=COLORS["bg_card"],
-        fg=COLORS["fg_text"],
-    )
+    result_rank_label = Label(results_card, text="", font=("Courier New", 30, "bold"), bg=COLORS["bg_card"], fg=COLORS["easy"])
     result_rank_label.pack(pady=(0, 8))
 
-    result_description_label = Label(
-        results_card,
-        text="",
-        font=FONTS["body"],
-        bg=COLORS["bg_card"],
-        fg=COLORS["fg_muted"],
-    )
+    result_description_label = Label(results_card, text="", font=FONTS["body"], bg=COLORS["bg_card"], fg=COLORS["fg_muted"])
     result_description_label.pack(pady=(0, 30))
     
     return frame
