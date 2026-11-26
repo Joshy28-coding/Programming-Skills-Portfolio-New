@@ -45,5 +45,31 @@
             "question_count": 10,
             "description": "High complexity mental computation"
         }
+    },
+    "RANKINGS" : {
+    "A+": {
+        "minimum": 91,
+        "description": "Outstanding performance!"
+    },
+    "A": {
+        "minimum": 81,
+        "description": "Excellent performance!"
+    },
+    "B": {
+        "minimum": 71,
+        "description": "Very good performance!"
+    },
+    "C": {
+        "minimum": 61,
+        "description": "Good performance!"
+    },
+    "D": {
+        "minimum": 51,
+        "description": "Satisfactory performance!"
+    },
+    "F": {
+        "minimum": 0,
+        "description": "Keep practising!"
+    }
     }
 }
