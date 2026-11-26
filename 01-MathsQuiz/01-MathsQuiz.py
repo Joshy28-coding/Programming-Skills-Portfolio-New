@@ -81,6 +81,7 @@ DIFFICULTY_BUTTON_IMAGES = {
 # ============================================
 
 def mainquestionf():
+    global attempts, correct_answer
     
     details=DIFFICULTIES[current_difficulty]
     first_number = random.randint(details["min_number"], details["max_number"])
@@ -141,7 +142,7 @@ def checkanswerf():
         attempts += 1
         if attempts == 1:
             feedback_label.config(
-                text="Not quite. Try one more time.",
+                text="Not quite.\nTry one more time.",
                 fg=COLORS["error"],
             )
         else:
@@ -158,22 +159,15 @@ def nextquestionf():
 
     question_count = DIFFICULTIES[current_difficulty]["question_count"]
     if current_question == question_count:
-        question_label.config(text="Quiz complete!")
-        progress_label.config(text=f"You answered {question_count} questions.")
-        score_label.config(text=f"Final score: {score} / {question_count * 10}")
-        feedback_label.config(text="Well done!")
-        answer_entry.config(state=DISABLED)
-        submit_button.config(state=DISABLED)
-        next_button.config(
-            text="Choose another difficulty",
-            command=lambda: show_page("home"),
+        result_title_label.config(text=f"{current_difficulty.title()} quiz complete!")
+        result_score_label.config(
+            text=f"Final score: {score} / {question_count * 10}"
         )
+        show_page("results")
         return
 
     current_question += 1
-    mainquestionf()
-
-    
+    mainquestionf()  
 
 # =============================================
 # Front-end visuals / frame functions
@@ -213,10 +207,9 @@ def difficultycrd(parent, difficulty, details, column):
 
     Label(content, text=details["description"], font=("Helvetica", 10), bg=COLORS["bg_card"], fg=COLORS["fg_muted"], wraplength=240).pack(anchor="w", fill="x", pady=20)
 
-    Button(
-        command=lambda level=difficulty: startquizf(level), bg=COLORS["bg_card"], activebackground=COLORS["bg_card"],
-        borderwidth=0, highlightthickness=0, relief=FLAT,
-    ).pack(pady=(0, 40))
+    Button(content, command=lambda level=difficulty: startquizf(level), bg=COLORS["bg_card"], image=DIFFICULTY_BUTTON_IMAGES[difficulty], activebackground=COLORS["bg_card"],
+        borderwidth=0, highlightthickness=0, relief=FLAT
+    ).pack(pady=(0, 70), side=BOTTOM)
     
     return card
 
@@ -253,7 +246,7 @@ def mainquizpage(parent):
     background.place(x=0, y=0, relwidth=1, relheight=1)
     background.lower()
 
-    Button(frame, text="Back to home", command=lambda: show_page("home"), bg=COLORS["bg_card"], fg=COLORS["fg_text"], relief=FLAT,).pack(anchor="w", padx=24, pady=20)
+    Button(frame, text="Back to home", command=lambda: show_page("home"), font=FONTS["body_bold"], bg=COLORS["bg_card"], fg=COLORS["fg_text"], relief=FLAT, width=12, height=2).pack(anchor="w", padx=24, pady=20)
     
     quiz_card = Frame(frame, bg=COLORS["bg_card"])
     quiz_card.pack(fill="x", padx=150, pady=(70, 0))
@@ -269,7 +262,7 @@ def mainquizpage(parent):
     question_label = Label(quiz_card, text="Choose a difficulty to begin.", font=("Arial", 30, "bold"), bg=COLORS["bg_card"], fg=COLORS["fg_text"], wraplength=500,)
     question_label.pack(pady=(35, 20))
 
-    answer_entry = Entry(quiz_card, font=FONTS["heading"], justify="center", bg=COLORS["bg_entry"], fg=COLORS["fg_text"], insertbackground=COLORS["fg_text"], relief=FLAT,)
+    answer_entry = Entry(quiz_card, justify="center", bg=COLORS["bg_entry"], font=FONTS["body_bold"], fg=COLORS["fg_text"], insertbackground=COLORS["fg_text"], relief=FLAT,)
     answer_entry.pack(padx=24, pady=10, ipadx=12, ipady=8)
     feedback_label = Label(quiz_card, text="", font=FONTS["body"], bg=COLORS["bg_card"], fg=COLORS["fg_muted"],)
     feedback_label.pack(pady=8)
@@ -277,16 +270,52 @@ def mainquizpage(parent):
     actions = Frame(quiz_card, bg=COLORS["bg_card"])
     actions.pack(pady=(12, 24))
     
-    submit_button = Button(actions, text="Submit answer", command=checkanswerf, bg=COLORS["bg_card_inner"], fg=COLORS["fg_text"],relief=FLAT,)
+    submit_button = Button(actions, text="Submit answer", command=checkanswerf, font=FONTS["body_bold"], bg=COLORS["bg_card_inner"], fg=COLORS["fg_text"],relief=FLAT, width=15, height=3)
     submit_button.pack(side=LEFT, padx=6)
 
-    next_button = Button(actions, text="Next question", command=nextquestionf, state=DISABLED, bg=COLORS["bg_card_inner"], fg=COLORS["fg_text"], disabledforeground=COLORS["fg_muted"], relief=FLAT,)
+    next_button = Button(actions, text="Next question", command=nextquestionf, font=FONTS["body_bold"], state=DISABLED, bg=COLORS["bg_card_inner"], fg=COLORS["fg_text"], disabledforeground=COLORS["fg_muted"], relief=FLAT, width=15, height=3)
     next_button.pack(side=LEFT, padx=6)
+    
+    return frame
+
+def mainresultspage(parent):
+    global result_title_label, result_score_label
+
+    frame = Frame(parent)
+    background = Label(frame, image=bg_photo_home)
+    background.place(x=0, y=0, relwidth=1, relheight=1)
+    background.lower()
+    
+    Button(frame, text="Back to home", command=lambda: show_page("home"), font=FONTS["body_bold"], bg=COLORS["bg_card"], fg=COLORS["fg_text"], relief=FLAT, width=15, height=3).pack(anchor="w", padx=24, pady=20)
+    
+    results_card = Frame(frame, bg=COLORS["bg_card"])
+    results_card.pack(fill="x", padx=150, pady=(70, 10))
+
+    result_title_label = Label(
+        results_card,
+        text="Quiz complete!",
+        font=FONTS["heading"],
+        bg=COLORS["bg_card"],
+        fg=COLORS["fg_text"],
+    )
+    result_title_label.pack(pady=(30, 12))
+
+    result_score_label = Label(
+        results_card,
+        text="",
+        font=FONTS["body_bold"],
+        bg=COLORS["bg_card"],
+        fg=COLORS["fg_text"],
+    )
+    result_score_label.pack(pady=(0, 30))
+    
     return frame
 
 
 pages["home"] = mainhomescreen(container)
 pages["quiz"] = mainquizpage(container)
+pages["results"] = mainresultspage(container)
+
 
 show_page("home")
 root.mainloop()
