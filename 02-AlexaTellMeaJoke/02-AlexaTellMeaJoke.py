@@ -1,5 +1,6 @@
 from tkinter import *
 import random
+from pathlib import Path
 from PIL import Image, ImageTk
 
 root = Tk()
@@ -10,18 +11,25 @@ root.resizable(0, 0)
 bg_joke_teller = Image.open(Path(__file__).parent / "resources" / "bg_joke_teller.png")
 bg_joke_photo = ImageTk.PhotoImage(bg_joke_teller)
 
-container = Frame(root)
-container.grid(row=0, column=1, sticky="nsew")
-container.config(width=600, height=600)
+realframe = Frame(root)
+realframe.pack(fill="both", expand=True)
 pages = {}
 
+def show_page(name):
+    for page in pages.values():
+        page.pack_forget()
+
+    pages[name].pack(fill="both", expand=True)
+
 def mainjokepage(parent):
-    frame = Frame(root)
+    frame = Frame(parent)
     background = Label(frame, image=bg_joke_photo)
-    background.place(x=0, y=0, rewidth=1, reheight=1)
-    background.lower()
+    background.pack(fill="both", expand=True)
+
+    return frame
 
 
-pages["home"] = mainjokepage(container)
+pages["home"] = mainjokepage(realframe)
 
+show_page("home")
 root.mainloop()
