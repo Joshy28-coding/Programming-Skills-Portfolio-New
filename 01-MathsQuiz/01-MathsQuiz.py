@@ -24,6 +24,7 @@ COLORS = data["COLORS"]
 # I've learned that tuple conversion from .json to .py helps me keep the font settings recognizable to the Tkinter code.
 FONTS = {name: tuple(font) for name, font in data["FONTS"].items()}
 DIFFICULTIES = data["DIFFICULTIES"]
+RANKINGS = data["RANKINGS"]
 
 # ====================================
 # Application Root
@@ -159,15 +160,34 @@ def nextquestionf():
 
     question_count = DIFFICULTIES[current_difficulty]["question_count"]
     if current_question == question_count:
+        maximum_score = question_count * 10
+        rank, rank_description = calculaterankf()
         result_title_label.config(text=f"{current_difficulty.title()} quiz complete!")
         result_score_label.config(
-            text=f"Final score: {score} / {question_count * 10}"
+            text=f"Final score: {score} / {maximum_score}"
         )
+        result_rank_label.config(text=f"Rank: {rank}")
+        result_description_label.config(text=rank_description)
         show_page("results")
         return
 
     current_question += 1
     mainquestionf()  
+    
+def calculaterankf():
+    question_count = DIFFICULTIES[current_difficulty]["question_count"]
+    score_percentage = score / (question_count * 10) * 100
+
+    for rank, details in sorted(
+        RANKINGS.items(),
+        key=lambda ranking: ranking[1]["minimum"],
+        reverse=True,
+    ):
+        if score_percentage >= details["minimum"]:
+            return rank, details["description"]
+
+    raise ValueError("No ranking threshold matches the final score.")
+
 
 # =============================================
 # Front-end visuals / frame functions
@@ -280,6 +300,7 @@ def mainquizpage(parent):
 
 def mainresultspage(parent):
     global result_title_label, result_score_label
+    global result_rank_label, result_description_label
 
     frame = Frame(parent)
     background = Label(frame, image=bg_photo_home)
@@ -308,6 +329,24 @@ def mainresultspage(parent):
         fg=COLORS["fg_text"],
     )
     result_score_label.pack(pady=(0, 30))
+
+    result_rank_label = Label(
+        results_card,
+        text="",
+        font=FONTS["heading"],
+        bg=COLORS["bg_card"],
+        fg=COLORS["fg_text"],
+    )
+    result_rank_label.pack(pady=(0, 8))
+
+    result_description_label = Label(
+        results_card,
+        text="",
+        font=FONTS["body"],
+        bg=COLORS["bg_card"],
+        fg=COLORS["fg_muted"],
+    )
+    result_description_label.pack(pady=(0, 30))
     
     return frame
 
