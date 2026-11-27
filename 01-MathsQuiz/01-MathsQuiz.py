@@ -15,7 +15,7 @@ import random
 #   - When the user submits the correct answer on the first attempt they get 10 pts, if second 5 pts. If they fail the second, they fail the question and move on to the next question.
 #   - Small widgets such as score count and question progress is displayed during the quiz.
 #   - The question's values are scrambled for addition and subtraction operations, they use the random module.
-#   - !!! What code you see here is mostly taken and learned from the 'Advanced Python' materials given to us as reference.
+#   - !!! What code you see here is mostly taken and learned from the 'Python GUI lecture notes' materials given to us as reference. 
 #   - !!! the '01-MathQuiz-Data-json' file contains dict. for Colors, fonts, difficulty items and rankings.
 
 #   - I acknowledge I have used A.I to assist me in bug-testing and SOME implementation complex functions such as Rankings functions and implementing buttons.
@@ -27,9 +27,11 @@ import random
 # What is anchor exactly? -  controls alignment inside the space a widget has been given. 
 # It’s different from side: side chooses which side of the parent the widget is placed on; anchor aligns it within its allotted space.
 # With fill="x", there’s no extra horizontal space to align within.
+# Refence - 'Python GUI lecture notes' provided by BathSpa RAK.
 
 # What is Global? - tells Python that an assignment inside a function should update a variable defined outside it,
 # rather than create a separate local variable.
+# Reference - https://www.geeksforgeeks.org/python/global-keyword-in-python/ title: "Global keyword in Python"
 
 # I've used UTF-8 to help encode text so computers can store and read characters.
 # This will be useful later on when I implement the difficulties dictionary.
@@ -75,6 +77,8 @@ bg_image_home = Image.open(Path(__file__).parent / "resources" / "mathquiz_bg.pn
 bg_photo_home = ImageTk.PhotoImage(bg_image_home)
 
 # - Loading the image buttons was prompted and assisted by A.I
+# - ChatGPT has been prompted for the buttons.
+# - ChatGPT prompt - "I've added button images in a resources folder outside my Math quiz file, for Python Tkinter: How can I implement these images while also being able to resize them to fit well with the GUI?"
 easybtn = Image.open(Path(__file__).parent / "resources" / "easybtn.png")
 easy_photo_btn = ImageTk.PhotoImage(easybtn.resize((240, 84)))
 
@@ -208,7 +212,8 @@ def calculaterankf():
         if score_percentage >= details["minimum"]:
             return rank, details["description"]
     raise ValueError("No ranking threshold matches the final score.")
-
+# - A.I ChatGPT has been used for this function
+# - ChatGPT prompt - "I've implemented RANKINGS categories in my .json data file for my Math quiz, can you assist me in implementing the Rankings function based on a score percentage?"
 
 # =============================================
 # Front-end visuals / GUI Functions
@@ -270,7 +275,7 @@ def mainhomescreen(parent):
     cards = Frame(frame, bg=COLORS["bg_color"])
     cards.pack()
 
-    # Make the three difficulty cards in equal width.
+    # Make three difficulty cards in equal width.
     for column in range(3):
         cards.grid_columnconfigure(column, weight=1, uniform="difficulty")
     

@@ -14,6 +14,8 @@ from PIL import Image, ImageTk
 #   - !!! What code you see here is mostly taken and learned from the 'Advanced Python' materials given to us as reference.
 #   - !!! the '01-MathQuiz-Data-json' file contains dict. for Colors, fonts, difficulty items and rankings.
 
+#  - Most of the code you see here are written, learned and referenced from 'Python GUI lecture notes' materials provided by BathSpa RAK.
+
 BASE_DIR = Path(__file__).resolve().parent
 # Locate the resources folder and its text file.
 JOKE_FILE = BASE_DIR / "resources" / "randomJokes.txt"
@@ -43,12 +45,14 @@ realframe.pack(fill="both", expand=True)
 pages = {}
 current_joke = None
 
+# Keeps selected pages in front.
 def showpagef(name):
     for page in pages.values():
         page.pack_forget()
 
     pages[name].pack(fill="both", expand=True)
 
+# Kept in mind on how to resize images from exercise 1 MathQuiz.
 def loadbuttonimagesf(filename):
     with Image.open(BASE_DIR / "resources" / filename) as image:
         return ImageTk.PhotoImage(image.resize((210, 60)))
@@ -100,6 +104,7 @@ def choosejokef():
         return
     
     available_jokes = [joke for joke in jokelistf if joke is not current_joke]
+    # takes a random line of the already appended joke list.
     current_joke = random.choice(available_jokes or jokelistf)
     joke_label.config(text=current_joke["setup"])
     punchline_label.config(text="")
@@ -122,13 +127,13 @@ def mainjokepage(parent):
     background.place(x=0, y=0, relwidth=1, relheight=1)
     background.lower()
 
-    quit_button = Button(frame, image=quit_button_photo, command=root.destroy, bg="#FFFFFF", activebackground="#FFFFFF", borderwidth=0, highlightthickness=0, relief=FLAT)
+    quit_button = Button(frame, image=quit_button_photo, command=root.destroy, bg="#FFFFFF", activebackground="#FFFFFF", borderwidth=0, relief=FLAT)
     quit_button.place(relx=0.95, rely=0.065, anchor="ne")
 
-    back_frames = Frame(frame, bg="#FFFFFF", bd=0, highlightthickness=0)
+    back_frames = Frame(frame, bg="#FFFFFF", bd=0, )
     back_frames.place(relx=0.5, rely=0.67, anchor="center")
 
-    spacing = Frame(back_frames, width=465, height=200, bg="#FFFFFF", bd=0, highlightthickness=0)
+    spacing = Frame(back_frames, width=465, height=200, bg="#FFFFFF", bd=0, )
     spacing.pack_propagate(False)
     spacing.pack()
 
@@ -137,12 +142,12 @@ def mainjokepage(parent):
     punchline_label = Label(spacing, text="", fg="#E47812", font=FONTS["punchline"], bg="#FFFFFF", justify="center", wraplength=440)
     punchline_label.pack(expand=True, fill="both", padx=12)
 
-    spacing1 = Frame(back_frames, width=465, height=100, bg="#FFFFFF", bd=0, highlightthickness=0)
+    spacing1 = Frame(back_frames, width=465, height=100, bg="#FFFFFF", bd=0,)
     spacing1.pack_propagate(False)
     spacing1.pack(pady=(12, 0))
-    tell_button = Button(spacing1, image=BUTTON_IMAGES["tell"], command=choosejokef, bg="#FFFFFF", activebackground="#FFFFFF", borderwidth=0, highlightthickness=0, relief=FLAT)
+    tell_button = Button(spacing1, image=BUTTON_IMAGES["tell"], command=choosejokef, bg="#FFFFFF", activebackground="#FFFFFF", borderwidth=0, relief=FLAT)
     tell_button.pack(side=LEFT, padx=8, expand=True)
-    reveal_button = Button(spacing1, image=BUTTON_IMAGES["reveal"], command=revealpunchlinef, state=DISABLED, bg="#FFFFFF", activebackground="#FFFFFF", disabledforeground="#080808", borderwidth=0, highlightthickness=0, relief=FLAT,)
+    reveal_button = Button(spacing1, image=BUTTON_IMAGES["reveal"], command=revealpunchlinef, state=DISABLED, bg="#FFFFFF", activebackground="#FFFFFF", disabledforeground="#080808", borderwidth=0, relief=FLAT,)
     reveal_button.pack(side=LEFT, padx=8, expand=True)
     return frame
 
