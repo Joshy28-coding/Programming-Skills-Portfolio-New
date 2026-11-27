@@ -66,11 +66,20 @@ def mainjokepage(parent):
     background.place(x=0, y=0, relwidth=1, relheight=1)
     background.lower()
 
-    spacing = Frame(frame, width=650, height=140, bg="#000000", bd=0, highlightthickness=0,)
+    test_frames = Frame(frame, bg="#FFFFFF", bd=0, highlightthickness=0)
+    test_frames.place(relx=0.5, rely=0.6, anchor="center")
+
+    spacing = Frame(test_frames, width=500, height=140, bg="#000000", bd=0, highlightthickness=0)
     spacing.pack_propagate(False)
-    spacing.pack(expand=True)
+    spacing.pack()
     test_label = Label(spacing, text="My text is here!", fg="#FFFFFF", bg="#000000", justify="center",)
     test_label.pack(expand=True)
+
+    spacing1 = Frame(test_frames, width=500, height=120, bg="#CE0000", bd=0, highlightthickness=0)
+    spacing1.pack_propagate(False)
+    spacing1.pack(pady=(12, 0))
+    test_label2 = Label(spacing1, text="My text is here!", fg="#FFFFFF", bg="#CE0000", justify="center",)
+    test_label2.pack(expand=True)
     return frame
 
 
