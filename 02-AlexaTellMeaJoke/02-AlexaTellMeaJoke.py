@@ -20,6 +20,9 @@ root.resizable(0, 0)
 bg_joke_teller = Image.open(Path(__file__).parent / "resources" / "bg_joke_teller.png")
 bg_joke_photo = ImageTk.PhotoImage(bg_joke_teller)
 
+with Image.open(BASE_DIR / "resources" / "quit_button.png") as quit_button_image:
+    quit_button_photo = ImageTk.PhotoImage(quit_button_image.resize((48, 48)))
+
 realframe = Frame(root)
 realframe.pack(fill="both", expand=True)
 pages = {}
@@ -101,6 +104,9 @@ def mainjokepage(parent):
     background = Label(frame, image=bg_joke_photo)
     background.place(x=0, y=0, relwidth=1, relheight=1)
     background.lower()
+
+    quit_button = Button(frame, image=quit_button_photo, command=root.destroy, bg="#FFFFFF", activebackground="#FFFFFF", borderwidth=0, highlightthickness=0, relief=FLAT)
+    quit_button.place(relx=0.95, rely=0.065, anchor="ne")
 
     test_frames = Frame(frame, bg="#FFFFFF", bd=0, highlightthickness=0)
     test_frames.place(relx=0.5, rely=0.67, anchor="center")
