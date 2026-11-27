@@ -77,37 +77,44 @@ def choosejokef():
     available_jokes = [joke for joke in jokelistf if joke is not current_joke]
     current_joke = random.choice(available_jokes or jokelistf)
     joke_label.config(text=current_joke["setup"])
+    punchline_label.config(text="")
     tell_button.config(image=BUTTON_IMAGES["next"])
     reveal_button.config(state=NORMAL)
 
+def revealpunchlinef():
+    if current_joke is not None:
+        punchline_label.config(text=current_joke["punchline"])
 
 # ==========================================
 # Frame Functions / Widgets
 # ==========================================
 
 def mainjokepage(parent):
-    global joke_label, tell_button, reveal_button
+    global joke_label, punchline_label, tell_button, reveal_button
 
     frame = Frame(parent)
     background = Label(frame, image=bg_joke_photo)
     background.place(x=0, y=0, relwidth=1, relheight=1)
     background.lower()
 
-    test_frames = Frame(frame, bg="#ACA7A7", bd=0, highlightthickness=0)
+    test_frames = Frame(frame, bg="#FFFFFF", bd=0, highlightthickness=0)
     test_frames.place(relx=0.5, rely=0.67, anchor="center")
 
     spacing = Frame(test_frames, width=465, height=200, bg="#000000", bd=0, highlightthickness=0)
     spacing.pack_propagate(False)
     spacing.pack()
+
     joke_label = Label(spacing, text="Click 'Tell me a joke' to begin!", fg="#FFFFFF", bg="#000000", justify="center", wraplength=460)
     joke_label.pack(expand=True, fill="both", padx=12)
+    punchline_label = Label(spacing, text="", fg="#FFFFFF", bg="#000000", justify="center", wraplength=460)
+    punchline_label.pack(expand=True, fill="both", padx=12)
 
-    spacing1 = Frame(test_frames, width=465, height=100, bg="#6D6D6D", bd=0, highlightthickness=0)
+    spacing1 = Frame(test_frames, width=465, height=100, bg="#FFFFFF", bd=0, highlightthickness=0)
     spacing1.pack_propagate(False)
     spacing1.pack(pady=(12, 0))
     tell_button = Button(spacing1, image=BUTTON_IMAGES["tell"], command=choosejokef, bg="#FFFFFF", activebackground="#FFFFFF", borderwidth=0, highlightthickness=0, relief=FLAT)
     tell_button.pack(side=LEFT, padx=8, expand=True)
-    reveal_button = Button(spacing1, image=BUTTON_IMAGES["reveal"], state=DISABLED, bg="#FFFFFF", activebackground="#FFFFFF", disabledforeground="#080808", borderwidth=0, highlightthickness=0, relief=FLAT,)
+    reveal_button = Button(spacing1, image=BUTTON_IMAGES["reveal"], command=revealpunchlinef, state=DISABLED, bg="#FFFFFF", activebackground="#FFFFFF", disabledforeground="#080808", borderwidth=0, highlightthickness=0, relief=FLAT,)
     reveal_button.pack(side=LEFT, padx=8, expand=True)
     return frame
 
