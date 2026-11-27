@@ -7,6 +7,11 @@ BASE_DIR = Path(__file__).resolve().parent
 # Locate the resources folder and its text file.
 JOKE_FILE = BASE_DIR / "resources" / "randomJokes.txt"
 
+FONTS = {
+    "joke": ["Arial", 17],
+    "punchline": ["Arial", 19, "bold"]
+}
+
 root = Tk()
 root.geometry("800x600")
 root.title("Joke Teller - Haha")
@@ -100,13 +105,13 @@ def mainjokepage(parent):
     test_frames = Frame(frame, bg="#FFFFFF", bd=0, highlightthickness=0)
     test_frames.place(relx=0.5, rely=0.67, anchor="center")
 
-    spacing = Frame(test_frames, width=465, height=200, bg="#000000", bd=0, highlightthickness=0)
+    spacing = Frame(test_frames, width=465, height=200, bg="#FFFFFF", bd=0, highlightthickness=0)
     spacing.pack_propagate(False)
     spacing.pack()
 
-    joke_label = Label(spacing, text="Click 'Tell me a joke' to begin!", fg="#FFFFFF", bg="#000000", justify="center", wraplength=460)
+    joke_label = Label(spacing, text="Click 'Tell me a joke' to begin!", font=FONTS["joke"], fg="#000000", bg="#FFFFFF", justify="center", wraplength=440)
     joke_label.pack(expand=True, fill="both", padx=12)
-    punchline_label = Label(spacing, text="", fg="#FFFFFF", bg="#000000", justify="center", wraplength=460)
+    punchline_label = Label(spacing, text="", fg="#E47812", font=FONTS["punchline"], bg="#FFFFFF", justify="center", wraplength=440)
     punchline_label.pack(expand=True, fill="both", padx=12)
 
     spacing1 = Frame(test_frames, width=465, height=100, bg="#FFFFFF", bd=0, highlightthickness=0)
