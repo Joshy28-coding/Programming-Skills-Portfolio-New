@@ -18,12 +18,23 @@ bg_joke_photo = ImageTk.PhotoImage(bg_joke_teller)
 realframe = Frame(root)
 realframe.pack(fill="both", expand=True)
 pages = {}
+current_joke = None
 
 def showpagef(name):
     for page in pages.values():
         page.pack_forget()
 
     pages[name].pack(fill="both", expand=True)
+
+def loadbuttonimagesf(filename):
+    with Image.open(BASE_DIR / "resources" / filename) as image:
+        return ImageTk.PhotoImage(image.resize((150, 40)))
+
+BUTTON_IMAGES = {
+    "tell": loadbuttonimagesf("tell_joke.png"),
+    "reveal": loadbuttonimagesf("reveal_punchline.png"),
+    "next": loadbuttonimagesf("next_joke.png"),
+}
 
 def loadfunnyjokesf():
     jokes = []
