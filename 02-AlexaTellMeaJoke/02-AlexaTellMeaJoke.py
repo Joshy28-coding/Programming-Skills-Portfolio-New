@@ -46,6 +46,7 @@ def loadfunnyjokesf():
                     "setup" : setup + seperator,
                     "punchline" : punchline.strip()
                 })
+        # Joke check in terminal
         print(f"Successfully loaded {len(jokes)} jokes.")
     
     except FileNotFoundError:
@@ -55,11 +56,6 @@ def loadfunnyjokesf():
 
 jokelistf = loadfunnyjokesf()
 
-def joke_check():
-    if jokelistf:
-        print(jokelistf[0]["setup"])
-        print(jokelistf[0]["punchline"])
-
 # ==========================================
 # Frame Functions / Widgets
 # ==========================================
@@ -67,8 +63,14 @@ def joke_check():
 def mainjokepage(parent):
     frame = Frame(parent)
     background = Label(frame, image=bg_joke_photo)
-    background.pack(fill="both", expand=True)
+    background.place(x=0, y=0, relwidth=1, relheight=1)
+    background.lower()
 
+    spacing = Frame(frame, width=650, height=140, bg="#000000", bd=0, highlightthickness=0,)
+    spacing.pack_propagate(False)
+    spacing.pack(expand=True)
+    test_label = Label(spacing, text="My text is here!", fg="#FFFFFF", bg="#000000", justify="center",)
+    test_label.pack(expand=True)
     return frame
 
 
